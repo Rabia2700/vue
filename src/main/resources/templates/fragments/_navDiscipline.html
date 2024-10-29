@@ -1,0 +1,76 @@
+<html xmlns:th="http://www.thymeleaf.org" >
+
+<th:block th:fragment="NavDiscipline">
+    <nav class="sidebar sidebar-offcanvas" id="sidebar" >
+        <ul class="nav" th:if="${session.authorithies[0].authority =='Admin' }">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/dashboard}">
+                    <i class="bi bi-arrow-left-circle-fill menu-icon "></i>
+                    <span class="menu-title">Retour à l'ENT</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{etatdiscipline}">
+                    <i class="icon-grid menu-icon"></i>
+                    <span class="menu-title">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{listeabsences}">
+                    <i class="bi bi-calendar-week menu-icon"></i>
+                    <span class="menu-title">Absences</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{listeretards}">
+                    <i class="bi bi-calendar-week menu-icon"></i>
+                    <span class="menu-title">Retards</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{citeUetat}">
+                    <i class="menu-icon bi bi-door-open "></i>
+                    <span class="menu-title">Cité Universitaire</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{rediger-rapport}">
+                    <i class="menu-icon bi bi-pen"></i>
+                    <span class="menu-title">Rédiger un rapport</span>
+                </a>
+            </li>
+
+        </ul>
+        <ul class="nav" th:if="${session.authorithies[0].authority =='User'}">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/dashboard}">
+                    <i class="bi bi-arrow-left-circle-fill menu-icon "></i>
+                    <span class="menu-title">Retour à l'ENT</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{listeabsences}">
+                    <i class="bi bi-calendar-week menu-icon"></i>
+                    <span class="menu-title">Absences</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{listeretards}">
+                    <i class="bi bi-calendar-week menu-icon"></i>
+                    <span class="menu-title">Retards</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{citeUetat}">
+                    <i class="menu-icon bi bi-door-open"></i>
+                    <span class="menu-title">Cité Universitaire</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <!-- partial -->
+
+
+</th:block>
+
+</html>

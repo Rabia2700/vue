@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <th:block th:replace="fragments/_head.html::head"></th:block>
+</head>
+<body>
+<div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+
+    <!--_header-->
+    <th:block th:replace="fragments/_header.html::header"></th:block>
+
+    <!--fin header-->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
+        <div class="theme-setting-wrapper">
+            <div id="settings-trigger"><i class="ti-settings"></i></div>
+            <div id="theme-settings" class="settings-panel">
+                <i class="settings-close ti-close"></i>
+                <p class="settings-heading">SIDEBAR SKINS</p>
+                <div class="sidebar-bg-options selected" id="sidebar-light-theme">
+                    <div class="img-ss rounded-circle bg-light border mr-3"></div>
+                    Light
+                </div>
+                <div class="sidebar-bg-options" id="sidebar-dark-theme">
+                    <div class="img-ss rounded-circle bg-dark border mr-3"></div>
+                    Dark
+                </div>
+                <p class="settings-heading mt-2">HEADER SKINS</p>
+                <div class="color-tiles mx-0 px-4">
+                    <div class="tiles success"></div>
+                    <div class="tiles warning"></div>
+                    <div class="tiles danger"></div>
+                    <div class="tiles info"></div>
+                    <div class="tiles dark"></div>
+                    <div class="tiles default"></div>
+                </div>
+            </div>
+        </div>
+        <!-- partial -->
+        <!-- partial:partials/_sidebar.html -->
+        <th:block th:replace="fragments/_navGestBiblio.html::NavBiblio"></th:block>
+
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-md-12 d-flex grid-margin w-100">
+                        <div class="row">
+                            <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                                <h3 class="font-weight-bold">
+                                    Liste des Ouvrages
+                                </h3>
+                                <h6 class="font-weight-normal mb-0">
+                                    Ici vous pourrez consulter tous les ouvrages present dans la bibliotheque
+                                    <span class="text-primary">(<span th:text="${#lists.size(ouvrages)}"></span> ouvrages present)</span>
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="list-group">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="table_id" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Titre de l'ouvrage</th>
+                                            <th>Auteur</th>
+                                            <th>Maison d'edition</th>
+                                            <th>Année publication</th>
+                                            <th>Disponible</th>
+                                            <th>Détails</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="ouvrages : ${ouvrages}">
+                                            <td th:text="${ouvrages.nom}"></td>
+                                            <td th:text="${ouvrages.auteur}"></td>
+                                            <td th:text="${ouvrages.maison_Edition}"></td>
+    <!--                                        <td>2011</td>-->
+                                            <td th:text="${ouvrages.date_Edition}"></td>
+                                            <td>
+                                                <label class="badge badge-success" th:if="${ouvrages.disponible == true}" th:text=" Oui "></label>
+                                                <label class="badge badge-danger" th:if="${ouvrages.disponible == false}" th:text=" Non "></label>
+                                            </td>
+                                            <td>
+                                                <div class="icon d-flex gap-lg-2 ">
+                                                    <div>
+                                                        <a class="text-primary text-decoration-none pointer" th:href ="@{|/details/${ouvrages.id}|}">Voir plus</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- content-wrapper ends -->
+
+            <!-- Modal for modlanotes  -->
+            <th:block
+                    th:replace="fragments/_modalsBiblio.html::modalsBiblio"
+            ></th:block>
+
+            <!-- End Modal for  moadlnotes  -->
+
+            <!-- partial:partials/_footer.html -->
+            <footer class="footer">
+                <th:block th:replace="fragments/_footer.html::footer"></th:block>
+            </footer>
+            <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+    </div>
+    <!-- container-scroller -->
+
+    <!-- plugins:js -->
+    <th:block th:replace="fragments/_js.html::js"></th:block>
+</div>
+<!-- End custom js for this page-->
+</body>
+</html>

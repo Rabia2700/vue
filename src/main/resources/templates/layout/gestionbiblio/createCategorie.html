@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <th:block th:replace="fragments/_head.html::head"></th:block>
+</head>
+<body>
+<div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+
+    <!--_header-->
+    <th:block th:replace="fragments/_header.html::header"></th:block>
+
+    <!--fin header-->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
+        <div class="theme-setting-wrapper">
+            <div id="settings-trigger"><i class="ti-settings"></i></div>
+            <div id="theme-settings" class="settings-panel">
+                <i class="settings-close ti-close"></i>
+                <p class="settings-heading">SIDEBAR SKINS</p>
+                <div class="sidebar-bg-options selected" id="sidebar-light-theme">
+                    <div class="img-ss rounded-circle bg-light border mr-3"></div>
+                    Light
+                </div>
+                <div class="sidebar-bg-options" id="sidebar-dark-theme">
+                    <div class="img-ss rounded-circle bg-dark border mr-3"></div>
+                    Dark
+                </div>
+                <p class="settings-heading mt-2">HEADER SKINS</p>
+                <div class="color-tiles mx-0 px-4">
+                    <div class="tiles success"></div>
+                    <div class="tiles warning"></div>
+                    <div class="tiles danger"></div>
+                    <div class="tiles info"></div>
+                    <div class="tiles dark"></div>
+                    <div class="tiles default"></div>
+                </div>
+            </div>
+        </div>
+        <!-- partial -->
+        <!-- partial:partials/_sidebar.html -->
+        <th:block th:replace="fragments/_navGestBiblio.html::NavBiblio"></th:block>
+
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-md-12 grid-margin">
+                        <div class="row">
+                            <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                                <h3 class="font-weight-bold">
+                                    Ajouter un Categorie
+                                </h3>
+                                <!--                                <h6 class="font-weight-normal mb-0">-->
+                                <!--                                    Ici vous pourrez consulter tous les ouvrages present dans la bibliotheque-->
+                                <!--                                    <span class="text-primary">(356 ouvrages present)</span>-->
+                                <!--                                </h6>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 stretch-card grid-margin">
+                    <div class="card">
+                        <div class="modal-content">
+                            <!--                            <div class="modal-header">-->
+                            <!--                                <h5 class="modal-title" id="pvSyn">Ajouter une categorie</h5>-->
+                            <!--                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>-->
+                            <!--                            </div>-->
+                            <div class="modal-body">
+
+                                <form class="row justify-content-center gap-3" th:action="@{/newCategorie}" th:method="post" th:object="${categorie1}">
+                                    <div class="col-lg-12 row flex-column">
+                                        <label for="categorie.nom" class="form-label">Nom de la catégorie</label>
+                                        <input th:field="*{nom}" type="text" class="form-control" id="categorie.nom" required>
+                                    </div>
+                                    <div class="col-lg-12 row flex-column">
+                                        <label for="categorie.code" class="form-label">Code</label>
+                                        <input th:field="*{code}" type="text" class="form-control" id="categorie.code" required>
+                                    </div>
+                                    <div class="col-lg-18 row flex-column">
+                                        <label for="categorie.description" class="form-label">Description</label>
+                                        <textarea th:field="*{description}" class="form-control" id="categorie.description" rows="5" required></textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- content-wrapper ends -->
+
+            <!-- Modal for modlanotes  -->
+            <th:block
+                    th:replace="fragments/_modalsBiblio.html::modalsBiblio"
+            ></th:block>
+
+            <!-- End Modal for  moadlnotes  -->
+
+            <!-- partial:partials/_footer.html -->
+            <footer class="footer">
+                <th:block th:replace="fragments/_footer.html::footer"></th:block>
+            </footer>
+            <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+    </div>
+    <!-- container-scroller -->
+
+    <!-- plugins:js -->
+    <th:block th:replace="fragments/_js.html::js"></th:block>
+</div>
+<!-- End custom js for this page-->
+</body>
+</html>

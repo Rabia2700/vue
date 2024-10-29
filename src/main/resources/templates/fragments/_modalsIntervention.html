@@ -1,0 +1,193 @@
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/js/creerIntervention.js"></script>
+    <script src="/js/moreIntervention.js"></script>
+</head>
+<body>
+<th:block th:fragment="modalsIntervention">
+
+
+  <div class="modal fade" id="demanderinterventionModal" tabindex="-1" aria-labelledby="demande-interventionModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-title">Spécifiez votre besoin</h5>
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+<!--          th:action="@{/creerIntervention}" th:method="post" th:object="${intervention}"-->
+          <form class=" form-sample row justify-content-center gap-3" >
+            <div class="form-group">
+              <label for="class" class="form-label">Choisissez une intervention</label>
+              <select name="level" id="intervention" class="form-select">
+                <option disabled selected value=" ">Sélectionnez une intervention</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="class" class="form-label">Choisissez une sous-intervention</label>
+              <select name="level" id="sous-intervention" class="form-select">
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="class" class="form-label">Entrez une description</label>
+              <input maxlength="100" type="text-area" class="form-control" id="exampleInputUsername1" placeholder="Description">
+            </div>
+
+            <!--              <button id="load" th:onclick="greetWorld()">using no variable</button>-->
+
+            <label id="download" class="form-group custom-file-upload">
+              <input accept="application/pdf" maxlength="5242880" type="file" multiple id="file"  formControlName="file" /><i
+                    class="ti-download"></i>
+              Chargez des fichiers
+            </label>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light" data-dismiss="modal" aria-label="Close">Fermer</button>
+          <a>
+<!--          <a th:href="@{gestionintervention}">-->
+            <input onclick="envoyer()" type="submit" id="envoyer" class="btn btn-primary" value="Envoyer">
+
+          </a>
+<!--          <input th:onclick="'envoyer(\'' + ${matricule} + '\')'" type="submit" id="envoyer" class="btn btn-primary" value="Envoyer">-->
+
+        </div>
+      </div>
+    </div>
+  </div><!-- Fin Modal demande d'intervention -->
+  <div class="modal fade" id="interventionDetailsModal" tabindex="-1" aria-labelledby="details-interventionModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-title">Détails de l'intervention</h5>
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+<!--          <ul th:each="interventions : ${interventions}">-->
+          <div class="form-group">
+            <label for="class" class="form-label">Numéro intervention : </label></div>
+          <div class="form-group">
+            <label for="class" class="form-label">Matricule étudiant : </label></div>
+          <div class="form-group">
+            <label for="class" class="form-label">Département :</label></div>
+          <div class="form-group">
+            <label for="class" class="form-label">Type de l'intervention : </label></div>
+          <div class="form-group">
+            <label for="class" class="form-label">Sous-intervention : </label></div>
+          <div class="form-group">
+            <label for="class" class="form-label">Date d'initiation : </label></div>
+          <div class="form-group">
+            <label for="class" class="form-label">Description : </label></div>
+          <div class="form-group">
+            <label for="class" class="form-label">Statut : </label></div>
+          <div class="form-group">
+            <label for="class" class="form-label">Pièce jointe : </label></div>
+          <div class="form-group">
+            <label for="class" class="form-label">Traité par : </label></div>
+          <div class="form-group">
+            <label for="class" class="form-label">Réponse : </label></div>
+<!--          </ul>-->
+        </div>
+
+      </div>
+    </div>
+  </div><!-- Fin Modal demande d'intervention -->
+
+  <!--Fait-->
+</th:block>
+
+<th:block th:fragment="modalsValidationIntervention">
+
+    <div class="modal fade" id="terminerInterventionModal" tabindex="-1" aria-labelledby="terminer-interventionModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-title">Terminer cette intervention</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <!--          <form th:action="@{/terminer/40}" method="post" enctype="multipart/form-data">-->
+                <form enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="float-input"  style="font-weight: 800; color: black;">Description</label>
+                            <input type="text" class="form-control" name="description" style="height: fit-content; width: 100%;min-height: 50px" formControlName="mail" id="description"></input>
+                        </div>
+                        <div class="form-group">
+                            <label for="float-input"  style="font-weight: 800; color: black;">Mail</label>
+                            <textarea maxlength="500"  class="form-control" name="emailContent" style="height: fit-content; width: 100%;min-height: 250px" formControlName="mail" id="float-input"></textarea>
+                            <p class="text-primary text-sm-end" ><span id="charCount">400</span>/500</p>
+                        </div>
+                        <label id="downloads" class="form-group custom-file-upload">
+                            <!--              <input type="file" name="piecesJointes" id="piecesJointes" multiple  formControlName="piecesJointes" />-->
+                            <input type="file" name="piecesJointes" id="files" multiple onchange="loadFileS(event)"  formControlName="files" />
+                            <i class="bi bi-download"></i>
+
+                            Chargez le fichier
+                        </label>
+                        <a>
+                            <!--                      <a th:href="@{gestionintervention}">-->
+                            <label class="custom-send-reponse" onclick="envoyerR()">
+                                <i class="bi bi-send"></i>
+                                Envoyer
+                            </label>
+                        </a>
+                        <!--            <button type="submit">envoyer</button>-->
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="rejetInterventionModal" tabindex="-1" aria-labelledby="terminer-interventionModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-title">Rejeter cette intervention</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <!--          <form th:action="@{/terminer/40}" method="post" enctype="multipart/form-data">-->
+                <form enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="float-input"  style="font-weight: 800; color: black;">Description</label>
+                            <input type="text" class="form-control" name="description" style="height: fit-content; width: 100%;min-height: 50px" formControlName="mail" id="description1"></input>
+                        </div>
+                        <div class="form-group">
+                            <label for="float-input"  style="font-weight: 800; color: black;">Mail</label>
+                            <textarea maxlength="250"  class="form-control" name="emailContent" style="height: fit-content; width: 100%;min-height: 150px" formControlName="mail" id="float-input1"></textarea>
+                            <p class="text-primary text-sm-end" ><span id="charCount1">111</span>/250</p>
+                        </div>
+<!--                        <label id="downloads" class="form-group custom-file-upload">-->
+<!--                            &lt;!&ndash;              <input type="file" name="piecesJointes" id="piecesJointes" multiple  formControlName="piecesJointes" />&ndash;&gt;-->
+<!--                            <input type="file" name="piecesJointes" id="files" multiple onchange="loadFileS(event)"  formControlName="files" />-->
+<!--                            <i class="bi bi-download"></i>-->
+
+<!--                            Chargez le fichier-->
+<!--                        </label>-->
+                        <a>
+                            <!--                      <a th:href="@{gestionintervention}">-->
+                            <label class="custom-send-reponse" onclick="rejeter()">
+                                <i class="bi bi-send"></i>
+                                Envoyer
+                            </label>
+                        </a>
+                        <!--            <button type="submit">envoyer</button>-->
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!--Fait-->
+</th:block>
+
+</body>
+
+</html>

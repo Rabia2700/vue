@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Discipline Cité U</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="../../vendors/feather/feather.css">
+    <link rel="stylesheet" href="../../vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link href="../../vendors/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../vendors/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="../../vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" type="../../text/css" href="js/select.dataTables.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="../../images/favicon.png" />
+</head>
+<body>
+<div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <!-- _header -->
+    <th:block th:replace="fragments/_header.html::header"></th:block>
+    <!-- fin header -->
+
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
+        <!-- Theme settings panel -->
+        <div class="theme-setting-wrapper">
+            <div id="settings-trigger"><i class="ti-settings"></i></div>
+            <div id="theme-settings" class="settings-panel">
+                <i class="settings-close ti-close"></i>
+                <p class="settings-heading">SIDEBAR SKINS</p>
+                <div class="sidebar-bg-options selected" id="sidebar-light-theme">
+                    <div class="img-ss rounded-circle bg-light border mr-3"></div>
+                    Light
+                </div>
+                <div class="sidebar-bg-options" id="sidebar-dark-theme">
+                    <div class="img-ss rounded-circle bg-dark border mr-3"></div>
+                    Dark
+                </div>
+                <p class="settings-heading mt-2">HEADER SKINS</p>
+                <div class="color-tiles mx-0 px-4">
+                    <div class="tiles success"></div>
+                    <div class="tiles warning"></div>
+                    <div class="tiles danger"></div>
+                    <div class="tiles info"></div>
+                    <div class="tiles dark"></div>
+                    <div class="tiles default"></div>
+                </div>
+            </div>
+        </div>
+        <!-- partial -->
+
+        <!-- partial:partials/_sidebar.html -->
+        <th:block th:replace="fragments/_navDiscipline.html::NavDiscipline"></th:block>
+        <!-- partial -->
+
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-md-12 grid-margin">
+                        <div class="row">
+                            <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                                <h3 class="font-weight-bold">
+                                    Welcome <span th:text="${session.name}"></span>
+                                </h3>
+                                <br>
+                                <h6 class="font-weight-normal mb-0" th:if="${session.authorithies[0].authority =='Admin' }">
+                                    Vous pouvez garder un œil sur les dossiers disciplinaires des étudiants de la cité dans ce menu.
+                                </h6>
+                                <h6 class="font-weight-normal mb-0" th:if="${session.authorithies[0].authority =='User' }">
+                                    Vous pouvez jeter un œil à votre dossier disciplinaire de la cité dans ce menu.
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Table to display disciplinary reports -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>Rapports Disciplinaires</h4>
+                        <table class="table table-bordered" id="rapportTable">
+                            <thead>
+                            <tr>
+                                <th>Date du Rapport</th>
+                                <th>Détails du Rapport</th>
+                                <th>Nom du Personnel</th>
+                                <th>Nom de l'étudiant</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- Les données seront insérées ici via JavaScript -->
+                            </tbody>
+                            <div id="userInfo" th:data-matricule="${matricule}" th:data-classe="${classe}" ></div>
+                        </table>
+                    </div>
+                </div> <br>
+                <div id="pagination">
+                    <button onclick="prevPage()">Précédent</button>
+                    <span id="pageIndicator">Page 1</span>
+                    <button onclick="nextPage()">Suivant</button>
+                </div>
+
+            </div>
+            <!-- content-wrapper ends -->
+
+            <!-- Modal for modal notes -->
+            <th:block th:replace="fragments/_modalsBiblio.html::modalsBiblio"></th:block>
+            <!-- End Modal for modal notes -->
+
+            <!-- partial:partials/_footer.html -->
+            <footer class="footer">
+                <th:block th:replace="fragments/_footer.html::footer"></th:block>
+            </footer>
+            <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+    </div>
+    <!-- container-scroller -->
+</div>
+    <!-- plugins:js -->
+    <th:block th:replace="fragments/_js.html::js"></th:block>
+    <!-- End custom js for this page-->
+
+    <!-- Script to fetch and display the disciplinary reports -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const userInfoDiv = document.getElementById('userInfo');
+            const userMatricule = userInfoDiv.getAttribute('data-matricule');
+            const userClasse = userInfoDiv.getAttribute('data-classe');
+
+            // Afficher le matricule et la classe dans la console du navigateur
+            console.log("Matricule de l'utilisateur connecté:", userMatricule);
+            console.log("Classe de l'utilisateur connecté:", userClasse);
+
+            // URL de l'API
+            let url = 'http://localhost:9100/api/rapports';
+
+            // Filtrage par matricule si l'utilisateur est un étudiant (classe non null)
+            if (userClasse && userClasse !== "null") {
+                url += `?matricule=${userMatricule}`;
+            }
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data); // Ajoutez cette ligne pour voir la réponse dans la console
+                    const tableBody = document.querySelector("#rapportTable tbody");
+                    data.forEach(rapport => {
+                        const row = document.createElement("tr");
+                        row.innerHTML = `
+                    <td>${rapport.dateRapport}</td>
+                    <td>${rapport.detailsRapport}</td>
+                    <td>${rapport.nomPersonnel}</td>
+                    <td>${rapport.etudiant.nom}</td>
+                `;
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        });
+
+
+    </script>
+</body>
+</html>

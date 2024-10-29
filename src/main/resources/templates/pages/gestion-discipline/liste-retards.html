@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Retards</title>
+    <!--chemin du sweetAlert-->
+    <script src="/js/sweetalert.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/sweetalert2.min.css}" >
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="/vendors/feather/feather.css">
+    <link rel="stylesheet" href="/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link href="/vendors/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" type="/text/css" href="js/select.dataTables.min.css">
+    <!-- End plugin css for this page -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="/vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/css/vertical-layout-light/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="/images/favicon.png" />
+    <!-- Required meta tags -->
+    <th:block th:replace="fragments/_head.html::head"></th:block>
+</head>
+
+<body>
+<div class="container-scroller">
+
+    <!--_header-->
+    <th:block th:replace="/fragments/_header.html::header"></th:block>
+
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:/partials/_settings-panel.html -->
+        <div class="theme-setting-wrapper">
+            <div id="settings-trigger"><i class="ti-settings"></i></div>
+            <div id="theme-settings" class="settings-panel">
+                <i class="settings-close ti-close"></i>
+                <p class="settings-heading">SIDEBAR SKINS</p>
+                <div class="sidebar-bg-options selected" id="sidebar-light-theme"><div class="img-ss rounded-circle bg-light border mr-3"></div>Light</div>
+                <div class="sidebar-bg-options" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border mr-3"></div>Dark</div>
+                <p class="settings-heading mt-2">HEADER SKINS</p>
+                <div class="color-tiles mx-0 px-4">
+                    <div class="tiles success"></div>
+                    <div class="tiles warning"></div>
+                    <div class="tiles danger"></div>
+                    <div class="tiles info"></div>
+                    <div class="tiles dark"></div>
+                    <div class="tiles default"></div>
+                </div>
+            </div>
+        </div>
+        <!-- partial -->
+        <!-- partial:partials/_sidebar.html -->
+        <th:block th:replace="fragments/_navDiscipline.html::NavDiscipline"></th:block>
+        <!-- partial -->
+        <div class="main-panel">
+
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-lg-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Retards des étudiants</h4>
+
+                                <div class="table-responsive">
+                                    <table id="table_id" class="table table-hover mb-4">
+                                        <thead>
+                                        <tr>
+                                            <th>Date du retard</th>
+                                            <th>Etudiant</th>
+                                            <th>Cours</th>
+                                            <th>Minutes de retard</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="retardTableBody">
+                                        <!-- Les lignes de tableau seront ajoutées ici dynamiquement -->
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <!-- Pied de page du tableau, si nécessaire -->
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                    <div id="userInfo" th:data-matricule="${matricule}" th:data-classe="${classe}" ></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+            <!-- partial:/partials/_footer.html -->
+            <footer class="footer">
+                <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2024.  Client Web ING4-ISI <a href="https://www.institutsaintjean.org/" target="_blank">ISJ-ENT.</a> All rights reserved.</span>
+                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
+                </div>
+            </footer>
+            <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const userInfoDiv = document.getElementById('userInfo');
+        const userMatricule = userInfoDiv.getAttribute('data-matricule');
+        const userClasse = userInfoDiv.getAttribute('data-classe');
+
+        // Afficher le matricule et la classe dans la console du navigateur
+        console.log("Matricule de l'utilisateur connecté:", userMatricule);
+        console.log("Classe de l'utilisateur connecté:", userClasse);
+
+        // URL de l'API
+        let url = 'http://localhost:9100/api/retards';
+
+        // Filtrage par matricule si l'utilisateur est un étudiant (classe non null)
+        if (userClasse && userClasse !== "null") {
+            url += `?matricule=${userMatricule}`;
+        }
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.getElementById('retardTableBody');
+                data.forEach(retard => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                            <td>${new Date(retard.date).toLocaleDateString()}</td>
+                            <td>${retard.etudiant.nom} ${retard.etudiant.prenom || ''}</td>
+                            <td>${retard.cours.nom}</td>
+                            <td>${retard.duree}</td>
+                        `;
+                    tableBody.appendChild(row);
+                });
+
+            })
+            .catch(error => console.error('Erreur lors de la récupération des données:', error));
+    });
+</script>
+
+<!-- container-scroller -->
+<!-- plugins:js -->
+<script src="/vendors/js/vendor.bundle.base.js"></script>
+
+<!-- Script Dropdown filter -->
+
+<script src="/js/off-canvas.js"></script>
+<script src="/js/hoverable-collapse.js"></script>
+<script src="/js/template.js"></script>
+<script src="/js/settings.js"></script>
+<script src="/js/todolist.js"></script>
+<!-- plugins:js -->
+<!-- endinject -->
+<!-- Plugin js for this page -->
+<script src="/vendors/chart.js/Chart.min.js"></script>
+<script src="/vendors/datatables.net/jquery.dataTables.js"></script>
+<script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+<script src="js/dataTables.select.min.js"></script>
+<script src="/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+<script src="/vendors/select2/select2.min.js"></script>
+<!-- End plugin js for this page -->
+<!-- endinject -->
+<!-- Custom js for this page-->
+<script src="/js/dashboard.js"></script>
+<script src="/js/Chart.roundedBarCharts.js"></script>
+<script src="/js/file-upload.js"></script>
+<script src="/js/typeahead.js"></script>
+<script src="/js/select2.js"></script>
+<!-- End custom js for this page-->
+<script>
+    // Example of using SweetAlert2
+</script>
+
+</body>
+</html>

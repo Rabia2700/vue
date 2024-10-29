@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en" html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Absences</title>
+    <!--chemin du sweetAlert-->
+    <script src="/js/sweetalert.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/sweetalert2.min.css}" >
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="/vendors/feather/feather.css">
+    <link rel="stylesheet" href="/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link href="/vendors/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" type="/text/css" href="js/select.dataTables.min.css">
+    <!-- End plugin css for this page -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="/vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/css/vertical-layout-light/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="/images/favicon.png" />
+    <!-- Required meta tags -->
+    <th:block th:replace="fragments/_head.html::head"></th:block>
+    <style>
+        form {
+            margin: 20px;
+        }
+        input[type="file"] {
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container-scroller">
+
+    <!--_header-->
+    <th:block th:replace="/fragments/_header.html::header"></th:block>
+
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:/partials/_settings-panel.html -->
+        <div class="theme-setting-wrapper">
+            <div id="settings-trigger"><i class="ti-settings"></i></div>
+            <div id="theme-settings" class="settings-panel">
+                <i class="settings-close ti-close"></i>
+                <p class="settings-heading">SIDEBAR SKINS</p>
+                <div class="sidebar-bg-options selected" id="sidebar-light-theme"><div class="img-ss rounded-circle bg-light border mr-3"></div>Light</div>
+                <div class="sidebar-bg-options" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border mr-3"></div>Dark</div>
+                <p class="settings-heading mt-2">HEADER SKINS</p>
+                <div class="color-tiles mx-0 px-4">
+                    <div class="tiles success"></div>
+                    <div class="tiles warning"></div>
+                    <div class="tiles danger"></div>
+                    <div class="tiles info"></div>
+                    <div class="tiles dark"></div>
+                    <div class="tiles default"></div>
+                </div>
+            </div>
+        </div>
+        <!-- partial -->
+        <!-- partial:partials/_sidebar.html -->
+        <th:block th:replace="fragments/_navDiscipline.html::NavDiscipline"></th:block>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-lg-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Absences des étudiants</h4>
+                                <!-- <div class="row mb-3">
+                                     <div class="col-md-6">
+                                         <label for="filterStatut">Filtrer par date :</label>
+                                         <select class="form-control" id="filterStatut">
+                                             <option value="">Tous les statuts</option>
+                                             <option value="traite">Traite</option>
+                                             <option value="enCours">En_cours</option>
+                                             <option value="rejete">Rejete</option>
+                                             <option value="annule">Annule</option>
+                                         </select>
+                                     </div>
+                                 </div> -->
+                                <!-- Bouton Insérer fiche -->
+                                <p class="card-description"></p>
+                                <div th:if="${session.authorithies[0].authority =='Admin' }">
+                                <h4>Uploader Fichier Excel</h4>
+                                <form id="uploadForm" enctype="multipart/form-data">
+                                    <input type="file" id="fileInput" name="file" accept=".xlsx,.xls" required/>
+                                    <button type="submit">Upload</button>
+                                </form>
+                                <p id="message"></p>
+                                </div>
+                                <script>
+                                    document.getElementById('uploadForm').addEventListener('submit', function(event) {
+                                        event.preventDefault();
+                                        var formData = new FormData();
+                                        var fileInput = document.getElementById('fileInput');
+                                        formData.append('file', fileInput.files[0]);
+                                        console.log('File added to FormData');
+
+                                        fetch('http://localhost:9100/upload', {
+                                            method: 'POST',
+                                            body: formData
+                                        })
+                                            .then(response => {
+                                                if (response.ok) {
+                                                    return response.text();
+                                                } else {
+                                                    throw new Error('Failed to upload file');
+                                                }
+                                            })
+                                            .then(data => {
+                                                document.getElementById('message').textContent = data;
+                                            })
+                                            .catch(error => {
+                                                document.getElementById('message').textContent = error.message;
+                                            });
+                                    });
+                                </script>
+
+                                <div class="table-responsive">
+                                    <table id="table_id" class="table table-hover mb-4">
+                                        <thead>
+                                        <tr>
+                                            <th>Date de l'absence</th>
+                                            <th>Etudiant</th>
+                                            <th>Cours</th>
+                                            <th>Nombre d'heures</th>
+                                            <th>Heures justifiées</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="absenceTableBody">
+                                        <!-- Les lignes de tableau seront ajoutées ici dynamiquement -->
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <!-- Pied de page du tableau, si nécessaire -->
+                                        </tr>
+                                        </tfoot>
+                                        <div id="userInfo" th:data-matricule="${matricule}" th:data-classe="${classe}" ></div>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+            <!-- partial:/partials/_footer.html -->
+            <footer class="footer">
+                <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2024.  Client Web ING4-ISI <a href="https://www.institutsaintjean.org/" target="_blank">ISJ-ENT.</a> All rights reserved.</span>
+                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
+                </div>
+            </footer>
+            <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const userInfoDiv = document.getElementById('userInfo');
+        const userMatricule = userInfoDiv.getAttribute('data-matricule');
+        const userClasse = userInfoDiv.getAttribute('data-classe');
+
+        // Afficher le matricule et la classe dans la console du navigateur
+        console.log("Matricule de l'utilisateur connecté:", userMatricule);
+        console.log("Classe de l'utilisateur connecté:", userClasse);
+
+        // URL de l'API
+        let url = 'http://localhost:9100/api/absences';
+
+        // Filtrage par matricule si l'utilisateur est un étudiant (classe non null)
+        if (userClasse && userClasse !== "null") {
+            url += `?matricule=${userMatricule}`;
+        }
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.getElementById('absenceTableBody');
+                data.forEach(absence => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                            <td>${new Date(absence.date).toLocaleDateString()}</td>
+                            <td>${absence.etudiant.nom} ${absence.etudiant.prenom || ''}</td>
+                            <td>${absence.cours.nom}</td>
+                            <td>${absence.nbHeures}</td>
+                            <td>${absence.heuresJustifiees}</td>
+                        `;
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Erreur lors de la récupération des données:', error));
+    });
+</script>
+<!-- container-scroller -->
+<!-- plugins:js -->
+<script src="/vendors/js/vendor.bundle.base.js"></script>
+<!-- endinject -->
+<!-- Plugin js for this page -->
+<!-- End plugin js for this page -->
+<!-- inject:js -->
+<!-- <script th:inline="javascript">
+    var token = /*[[${accessToken}]]*/ 'valeur_par_defaut';
+    var matricule = /*[[${code}]]*/ 'valeur_par_defaut';
+    // var idInterventionS = /*[[${idInterventionS}]]*/ 'valeur_par_defaut';
+
+    $(document).ready(function() {
+        $('#table_id').dataTable( {
+            order: [ [0, 'desc'] ] ,
+            stateSave: true,
+            processing: true,
+            // serverSide: true
+        });
+    })
+</script> -->
+
+<!--<script type="text/javascript" th:src="@{/js/moreIntervention.js}"></script>-->
+<script src="/js/off-canvas.js"></script>
+<script src="/js/hoverable-collapse.js"></script>
+<script src="/js/template.js"></script>
+<script src="/js/settings.js"></script>
+<script src="/js/todolist.js"></script>
+
+<!-- endinject -->
+<!-- Custom js for this page-->
+<!-- End custom js for this page-->
+
+
+
+<!-- plugins:js -->
+<!-- endinject -->
+<!-- Plugin js for this page -->
+<script src="/vendors/chart.js/Chart.min.js"></script>
+<script src="/vendors/datatables.net/jquery.dataTables.js"></script>
+<script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+<script src="js/dataTables.select.min.js"></script>
+
+
+<!-- Plugin js for this page -->
+<script src="/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+<script src="/vendors/select2/select2.min.js"></script>
+<!-- End plugin js for this page -->
+
+<!-- endinject -->
+<!-- Custom js for this page-->
+<script src="/js/dashboard.js"></script>
+<script src="/js/Chart.roundedBarCharts.js"></script>
+
+<!-- Custom js for this page-->
+<script src="/js/file-upload.js"></script>
+<script src="/js/typeahead.js"></script>
+<script src="/js/select2.js"></script>
+<!-- End custom js for this page-->
+
+
+<script>
+    // Example of using SweetAlert2
+
+</script>
+
+</body>
+
+</html>

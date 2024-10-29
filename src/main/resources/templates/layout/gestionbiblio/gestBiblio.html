@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <!-- Required meta tags -->
+  <th:block th:replace="fragments/_head.html::head"></th:block>
+</head>
+<body>
+<div class="container-scroller">
+  <!-- partial:partials/_navbar.html -->
+
+  <!--_header-->
+  <th:block th:replace="fragments/_header.html::header"></th:block>
+
+  <!--fin header-->
+  <div class="container-fluid page-body-wrapper">
+    <!-- partial:partials/_settings-panel.html -->
+    <div class="theme-setting-wrapper">
+      <div id="settings-trigger"><i class="ti-settings"></i></div>
+      <div id="theme-settings" class="settings-panel">
+        <i class="settings-close ti-close"></i>
+        <p class="settings-heading">SIDEBAR SKINS</p>
+        <div class="sidebar-bg-options selected" id="sidebar-light-theme">
+          <div class="img-ss rounded-circle bg-light border mr-3"></div>
+          Light
+        </div>
+        <div class="sidebar-bg-options" id="sidebar-dark-theme">
+          <div class="img-ss rounded-circle bg-dark border mr-3"></div>
+          Dark
+        </div>
+        <p class="settings-heading mt-2">HEADER SKINS</p>
+        <div class="color-tiles mx-0 px-4">
+          <div class="tiles success"></div>
+          <div class="tiles warning"></div>
+          <div class="tiles danger"></div>
+          <div class="tiles info"></div>
+          <div class="tiles dark"></div>
+          <div class="tiles default"></div>
+        </div>
+      </div>
+    </div>
+    <!-- partial -->
+    <!-- partial:partials/_sidebar.html -->
+    <th:block th:replace="fragments/_NavGestBiblio.html::NavBiblio"></th:block>
+
+    <!-- partial -->
+    <div class="main-panel">
+      <div class="content-wrapper">
+        <div class="row">
+          <div class="col-md-12 grid-margin">
+            <div class="row">
+              <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                <h3 class="font-weight-bold">
+                  Welcome <span th:text="${session.name}"></span>
+                </h3>
+                <h6 class="font-weight-normal mb-0">
+                  All systems are running smoothly! You have
+                  <span class="text-primary">3 unread alerts!</span>
+                </h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+<!--          <div class="row" th:if="${session.authorithies[0].authority =='Admin' }">-->
+          <div class="col-md-3 grid-margin stretch-card">
+            <div class="card tale-bg">
+              <div class="card-people mt-auto" >
+                <img src="/images/dashboard/Library-amico.png" alt="people" >
+                <div class="weather-info">
+                  <div class="d-flex">
+                    <div>
+                      <h2 class="mb-0 font-weight-normal"><i class="icon-sun mr-2"></i>31<sup>C</sup></h2>
+                    </div>
+                    <div class="ml-2">
+                      <h4 class="location font-weight-normal">Yaoundé</h4>
+                      <h6 class="font-weight-normal">Cameroun</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 grid-margin transparent">
+            <div class="row">
+              <div class="col-md-6 mb-4 stretch-card transparent">
+                <div class="card card-tale">
+                  <div class="card-body">
+                    <p class="mb-4">N° d'ouvrage</p>
+                    <p class="fs-30 mb-2"><span th:text="${#lists.size(ouvrages)}"></span></p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 mb-4 stretch-card transparent">
+                <div class="card card-dark-blue">
+                  <div class="card-body">
+                    <p class="mb-4">N° d'ouvrage emprunté</p>
+                    <p class="fs-30 mb-2"><span th:text="${#lists.size(emprunts)}"></span></p>
+<!--                    <p>22.00% (par semaine)</p>-->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
+                <div class="card card-light-blue">
+                  <div class="card-body">
+                    <p class="mb-4">Nombre de catégories</p>
+                    <p class="fs-30 mb-2"><span th:text="${#lists.size(categories)}"></span></p>
+<!--                    <p>2.00% (30 days)</p>-->
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 stretch-card transparent">
+                <div class="card card-light-danger">
+                  <div class="card-body">
+                    <p class="mb-4">Nombre d'adhérants</p>
+                    <p class="fs-30 mb-2"><span th:text="${#lists.size(adherants)}"></span></p>
+<!--                    <p>0.22% (30 days)</p>-->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- content-wrapper ends -->
+
+      <!-- Modal for modlanotes  -->
+      <th:block
+              th:replace="fragments/_modalsBiblio.html::modalsBiblio"
+      ></th:block>
+
+      <!-- End Modal for  moadlnotes  -->
+
+      <!-- partial:partials/_footer.html -->
+      <footer class="footer">
+        <th:block th:replace="fragments/_footer.html::footer"></th:block>
+      </footer>
+      <!-- partial -->
+    </div>
+    <!-- main-panel ends -->
+  </div>
+  <!-- container-scroller -->
+
+  <!-- plugins:js -->
+  <th:block th:replace="fragments/_js.html::js"></th:block>
+</div>
+<!-- End custom js for this page-->
+</body>
+</html>

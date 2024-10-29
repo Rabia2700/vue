@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Rédiger rapport</title>
+    <!-- Required meta tags -->
+    <th:block th:replace="fragments/_head.html::head"></th:block>
+</head>
+<body>
+<div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+
+    <!--_header-->
+    <th:block th:replace="fragments/_header.html::header"></th:block>
+
+    <!--fin header-->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
+        <div class="theme-setting-wrapper">
+            <div id="settings-trigger"><i class="ti-settings"></i></div>
+            <div id="theme-settings" class="settings-panel">
+                <i class="settings-close ti-close"></i>
+                <p class="settings-heading">SIDEBAR SKINS</p>
+                <div class="sidebar-bg-options selected" id="sidebar-light-theme">
+                    <div class="img-ss rounded-circle bg-light border mr-3"></div>
+                    Light
+                </div>
+                <div class="sidebar-bg-options" id="sidebar-dark-theme">
+                    <div class="img-ss rounded-circle bg-dark border mr-3"></div>
+                    Dark
+                </div>
+                <p class="settings-heading mt-2">HEADER SKINS</p>
+                <div class="color-tiles mx-0 px-4">
+                    <div class="tiles success"></div>
+                    <div class="tiles warning"></div>
+                    <div class="tiles danger"></div>
+                    <div class="tiles info"></div>
+                    <div class="tiles dark"></div>
+                    <div class="tiles default"></div>
+                </div>
+            </div>
+        </div>
+        <!-- partial -->
+        <!-- partial:partials/_sidebar.html -->
+        <th:block th:replace="fragments/_navDiscipline.html::NavDiscipline"></th:block>
+
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-md-12 grid-margin">
+                        <div class="row">
+                            <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                                <h3 class="font-weight-bold">
+                                    Rédiger un rapport disciplinaire sur un étudiant
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 stretch-card grid-margin">
+                    <div class="card">
+                        <div class="modal-content">
+                            <div class="modal-body">
+
+                                <form th:action="@{/creer-rapports}" th:object="${rapportDisciplinaireDTO}" method="post" class="row justify-content-center gap-3">
+                                    <div class="col-lg-12 row flex-column">
+                                        <label for="matricule" class="form-label">Matricule Etudiant:</label>
+                                        <input type="text" th:field="*{matricule}" class="form-control" style="width: 45%" required>
+                                    </div>
+                                    <div class="col-lg-12 row flex-column">
+                                        <label for="nomPersonnel" class="form-label">Nom Personnel:</label>
+                                        <input type="text" th:field="*{nomPersonnel}" class="form-control" style="width: 45%" required>
+                                    </div>
+                                    <div class="col-lg-12 row flex-column">
+                                        <label for="dateRapport" class="form-label">Date du Rapport:</label>
+                                        <input type="date" th:field="*{dateRapport}" class="form-control" style="width: 45%" required>
+                                    </div>
+                                    <div class="col-lg-18 row flex-column">
+                                        <label for="detailsRapport" class="form-label">Détails Rapport:</label>
+                                        <textarea th:field="*{detailsRapport}" class="form-control" rows="5" required></textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Valider Rapport</button>
+                                    </div>
+                                </form>
+                                <div th:text="${message}"></div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+
+            <!-- Modal for modlanotes  -->
+            <th:block th:replace="fragments/_modalsBiblio.html::modalsBiblio"></th:block>
+
+            <!-- End Modal for  moadlnotes  -->
+
+            <!-- partial:partials/_footer.html -->
+            <footer class="footer">
+                <th:block th:replace="fragments/_footer.html::footer"></th:block>
+            </footer>
+            <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+    </div>
+    <!-- container-scroller -->
+
+    <!-- plugins:js -->
+    <th:block th:replace="fragments/_js.html::js"></th:block>
+</div>
+<!-- End custom js for this page-->
+</body>
+</html>

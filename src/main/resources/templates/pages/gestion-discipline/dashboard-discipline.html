@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Discipline</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="../../vendors/feather/feather.css">
+    <link rel="stylesheet" href="../../vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link href="../../vendors/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../vendors/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="../../vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" type="../../text/css" href="js/select.dataTables.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="../../images/favicon.png" />
+
+</head>
+
+<th:block th:replace="fragments/_head.html::head"></th:block>
+</head>
+<body>
+<div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+
+    <!--_header-->
+    <th:block th:replace="fragments/_header.html::header"></th:block>
+
+    <!--fin header-->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
+        <div class="theme-setting-wrapper">
+            <div id="settings-trigger"><i class="ti-settings"></i></div>
+            <div id="theme-settings" class="settings-panel">
+                <i class="settings-close ti-close"></i>
+                <p class="settings-heading">SIDEBAR SKINS</p>
+                <div class="sidebar-bg-options selected" id="sidebar-light-theme">
+                    <div class="img-ss rounded-circle bg-light border mr-3"></div>
+                    Light
+                </div>
+                <div class="sidebar-bg-options" id="sidebar-dark-theme">
+                    <div class="img-ss rounded-circle bg-dark border mr-3"></div>
+                    Dark
+                </div>
+                <p class="settings-heading mt-2">HEADER SKINS</p>
+                <div class="color-tiles mx-0 px-4">
+                    <div class="tiles success"></div>
+                    <div class="tiles warning"></div>
+                    <div class="tiles danger"></div>
+                    <div class="tiles info"></div>
+                    <div class="tiles dark"></div>
+                    <div class="tiles default"></div>
+                </div>
+            </div>
+        </div>
+        <!-- partial -->
+        <!-- partial:partials/_sidebar.html -->
+        <th:block th:replace="fragments/_navDiscipline.html::NavDiscipline"></th:block>
+
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-md-12 grid-margin">
+                        <div class="row">
+                            <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                                <h3 class="font-weight-bold">
+                                    Welcome <span th:text="${session.name}"></span>
+                                </h3>
+                                <br> <h6 class="font-weight-normal mb-0" th:if="${session.authorithies[0].authority =='Admin' }">
+                                    Vous pouvez garder un œil sur les dossiers disciplinaires des étudiants dans ce menu.
+                                </h6>
+                                <h6 class="font-weight-normal mb-0" th:if="${session.authorithies[0].authority =='User' }">
+                                    Vous pouvez jeter un œil à votre dossier disciplinaire dans ce menu.
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" >
+                    <div class="col-md-3 grid-margin stretch-card">
+                        <div class="card tale-bg">
+                            <div class="card-people mt-auto" >
+                                <img src="/images/dashboard/Scrum%20board-amico.png" alt="people" >
+                                <div class="weather-info">
+                                    <div class="d-flex">
+                                        <div>
+                                            <h2 class="mb-0 font-weight-normal"><i class="icon-sun mr-2"></i>31<sup>C</sup></h2>
+                                        </div>
+                                        <div class="ml-2">
+                                            <h4 class="location font-weight-normal">Yaoundé</h4>
+                                            <h6 class="font-weight-normal">Cameroun</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 grid-margin transparent">
+                        <div class="row">
+                            <div class="col-md-6 mb-4 stretch-card transparent">
+                                <div class="card card-tale">
+                                    <div class="card-body">
+                                        <p class="mb-4">Heures d'absences permises par UE</p>
+                                        <p class="fs-30 mb-2">10% du total</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4 stretch-card transparent">
+                                <div class="card card-dark-blue">
+                                    <div class="card-body">
+                                        <p class="mb-4">Total des Heures d'absences</p>
+                                        <p class="fs-30 mb-2">44</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
+                                <div class="card card-light-blue">
+                                    <div class="card-body">
+                                        <p class="mb-4">Nombre de Retards</p>
+                                        <p class="fs-30 mb-2">4</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 stretch-card transparent">
+                                <div class="card card-light-danger">
+                                    <div class="card-body">
+                                        <p class="mb-4">Points de Pénalités</p>
+                                        <p class="fs-30 mb-2">7</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- content-wrapper ends -->
+
+            <!-- Modal for modlanotes  -->
+            <th:block
+                    th:replace="fragments/_modalsBiblio.html::modalsBiblio"
+            ></th:block>
+
+            <!-- End Modal for  moadlnotes  -->
+
+            <!-- partial:partials/_footer.html -->
+            <footer class="footer">
+                <th:block th:replace="fragments/_footer.html::footer"></th:block>
+            </footer>
+            <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+    </div>
+    <!-- container-scroller -->
+
+    <!-- plugins:js -->
+    <th:block th:replace="fragments/_js.html::js"></th:block>
+</div>
+<!-- End custom js for this page-->
+</body>
+</html>

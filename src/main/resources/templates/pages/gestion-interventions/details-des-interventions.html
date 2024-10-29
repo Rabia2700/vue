@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>ISJ-ENT</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="/vendors/feather/feather.css">
+  <link rel="stylesheet" href="/vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" href="/vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link href="/vendors/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/vendors/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+<!--  <link rel="stylesheet" href="/vendors/datatables.net-bs4/dataTables.bootstrap4.css">-->
+  <link rel="stylesheet" href="/vendors/ti-icons/css/themify-icons.css">
+<!--  <link rel="stylesheet" type="/text/css" href="js/select.dataTables.min.css">-->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/css/vertical-layout-light/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="/images/favicon.png" />
+  <link rel="stylesheet" type="text/css" th:href="@{/css/gIntervention.css}" >
+  <link rel="stylesheet" type="text/css" th:href="@{/css/gInterventionResp.css}" >
+  <!--chemin du sweetAlert-->
+  <script src="/js/sweetalert.min.js"></script>
+  <link rel="stylesheet" th:href="@{/css/sweetalert2.min.css}" >
+<!--  <script  th:inline="javascript">-->
+<!--    alert("hello world")-->
+<!--    function greetWorld() {-->
+<!--      alert("hello world")-->
+<!--    }-->
+
+<!--    function salute(name) {-->
+<!--      alert("hello: " + name)-->
+<!--    }-->
+<!--  </script>-->
+  <th:block th:replace="fragments/_head.html::head"></th:block>
+</head>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:/partials/_navbar.html -->
+    <!--_header-->
+    <th:block th:replace="/fragments/_header.html::header"></th:block>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:/partials/_settings-panel.html -->
+      <div class="theme-setting-wrapper">
+        <div id="settings-trigger"><i class="ti-settings"></i></div>
+        <div id="theme-settings" class="settings-panel">
+          <i class="settings-close ti-close"></i>
+          <p class="settings-heading">SIDEBAR SKINS</p>
+          <div class="sidebar-bg-options selected" id="sidebar-light-theme"><div class="img-ss rounded-circle bg-light border mr-3"></div>Light</div>
+          <div class="sidebar-bg-options" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border mr-3"></div>Dark</div>
+          <p class="settings-heading mt-2">HEADER SKINS</p>
+          <div class="color-tiles mx-0 px-4">
+            <div class="tiles success"></div>
+            <div class="tiles warning"></div>
+            <div class="tiles danger"></div>
+            <div class="tiles info"></div>
+            <div class="tiles dark"></div>
+            <div class="tiles default"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- partial -->
+      <!-- partial:partials/_sidebar.html -->
+      <th:block th:replace="/fragments/_navGestInt.html::navGestInt"></th:block>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-lg-2" ></div>
+            <div class="col-lg-8 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4  class="ml-2 card-title">Détails de l'intervention</h4>
+<!--                  <p class="card-description">-->
+<!--                    Acceptez ou Rejetez la demande -->
+<!--                  </p>-->
+                  <div class="col my-4">
+                    <div class="form-group">
+                      <label  class="form-label">Numero intervention : <span th:text="${oneIntervention.code}" class="pro-detail"> </span></label> <br>
+<!--                    </div>-->
+
+                      <label  class="form-label">Matricule etudiant : <span th:text="${oneIntervention.etudiant.matricule}" class="pro-detail"> </span></label>
+<!--                  </div>--> <br>
+<!--                    <div class="form-group">-->
+                      <label  class="form-label">Departement : <span th:text="${oneIntervention.departement.intituleDepartement}" class="pro-detail"> </span></label>
+<!--                    </div>--> <br>
+<!--                    <div class="form-group">-->
+                      <!--                            <label for="class" class="form-label">Type de l'intervention : <span th:text="${oneIntervention.}" class="pro-detail"> </span> </label></div>-->
+<!--                      <div class="form-group">-->
+                        <label class="form-label">Sous-intervention : <span th:text="${oneIntervention.sousIntervention.intituleSousIntervention}" class="pro-detail"> </span></label>
+<!--              </div>--> <br>
+<!--                      <div class="form-group">-->
+                      <label  class="form-label">Date d'initiation : <span  th:text="${#dates.format(oneIntervention.dateCreationInter, 'dd-MM-yyyy HH:mm:ss')}"  class="pro-detail"> </span></label>
+                      <br th:if="${session.authorithies[0].authority == 'Admin' }">
+                      <label th:if="${session.authorithies[0].authority == 'Admin' }" class="form-label">Date de derniere modification : <span  th:if="${oneIntervention.modificationDate != null}"  th:text="${#dates.format(oneIntervention.modificationDate, 'dd-MM-yyyy HH:mm:ss')}"  class="pro-detail"> </span></label>
+<!--            </div>--> <br>
+<!--                      <div class="form-group">-->
+                        <label  class="form-label">Description : <span th:if="${oneIntervention.description != null}"><span th:text="${oneIntervention.description}" class="pro-detail"> </span></span> </label>
+<!--          </div>--> <br>
+<!--
+            <div class="form-group">-->
+                        <label  class="form-label">Statut : <span th:text="${oneIntervention.statut}" class="pro-detail"> </span></label>
+<!--        </div>--> <br>
+<!--                      <div class="form-group">-->
+                        <label  class="form-label">Piece jointe : <span th:if="${oneIntervention.piecesJointes != null}" > <a th:each="piecesJointe : ${oneIntervention.piecesJointes}"
+                                                                                       th:href="@{/download/{idPieceJ}(idPieceJ=${piecesJointe.idPieceJointe})}"  >
+                                                                                  <i class="bi bi-file-earmark-binary-fill"></i></a> </span></label>
+                      <br th:if="${session.authorithies[0].authority == 'Admin' }">
+                      <!--                      </div>-->
+<!--                      <div class="form-group">-->
+                        <label th:if="${session.authorithies[0].authority == 'Admin' }"  class="form-label">Traite par : <span th:if="${oneIntervention.personnel != null}"> <span th:text="${oneIntervention.personnel.nomPersonnel}" class="pro-detail"> </span> <span th:text="${oneIntervention.personnel.prenomPersonnel}" class="pro-detail"> </span> </span> </label>
+<!--      </div>--> <br>
+<!--                      <div class="form-group">-->
+                        <label  class="form-label">Reponse : <span  th:if="${oneIntervention.reponse != null}"  th:text="${oneIntervention.reponse}"  class="pro-detail"> </span></label> </label><br><br><br><br>
+                      <div class="row" style="display: flex; justify-content: space-between" >
+                        <div style="width: fit-content;height: fit-content" >
+                          <a th:if="${session.authorithies[0].authority == 'Admin'}" th:href="@{/listeInterventionParDepartement}">
+                            <button type="button" class="btn btn-primary "> Retour </button>
+                          </a>
+                          <a th:if="${session.authorithies[0].authority == 'User'}" th:href="@{/listeIntervention}">
+                            <button type="button" class="btn btn-primary "> Retour </button>
+                          </a>
+                        </div>
+                        <div style="width: fit-content;height: fit-content" >
+
+                          <a th:data-id="${oneIntervention.idIntervention}" onclick="annuler(this)" th:if="${oneIntervention.statut == 'nonTraite' && session.authorithies[0].authority =='User' &&  !oneIntervention.canceled}">
+                            <button type="button" class="btn btn-danger bi bi-x-lg"></button>
+                          </a>
+
+                          <a  th:if="${oneIntervention.statut == 'nonTraite' && session.authorithies[0].authority =='Admin' && !oneIntervention.canceled}"   th:data-code="${code}" th:data-id="${oneIntervention.idIntervention}" th:data-matricule="${oneIntervention.etudiant.matricule}" onclick="accepter(this)"  >
+                            <button type="button" class="btn btn-success bi bi-check-lg" ></button>
+                          </a>
+
+                          <button th:if="${oneIntervention.statut == 'enCours' && session.authorithies[0].authority =='Admin'}"
+                                  th:data-id="${oneIntervention.idIntervention}"
+                                  onclick="showAlert(this)" data-toggle="modal"
+                                  data-target="#terminerInterventionModal"  type="button" class="btn btn-secondary bi bi-chat-square"></button>
+                          <a  th:data-id="${oneIntervention.idIntervention}"  data-toggle="modal" data-target="#rejetInterventionModal"
+                              onclick="rejetContenu(this)" th:if="${oneIntervention.statut == 'enCours' && session.authorithies[0].authority =='Admin'}
+                          ">
+                            <button  type="button" class="btn btn-danger bi bi-x-lg"></button>
+                          </a>
+                        </div>
+                      </div>
+
+                      <!--                              <button type="button" class="btn btn-primary bi bi-eye-fill" href="#" data-toggle="modal" data-target="#terminerInterventionModal"></button>-->
+
+
+
+                      <!--    </div>-->
+                    </div>
+                </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2" ></div>
+
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:/partials/_footer.html -->
+        <footer class="footer">
+          <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2024.  Client Web ING4-ISI <a href="https://www.institutsaintjean.org/" target="_blank">ISJ-ENT.</a> All rights reserved.</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
+          </div>
+        </footer>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+
+
+    <th:block th:replace="fragments/_modalsIntervention.html::modalsIntervention"></th:block>
+
+    <!-- Fin Modal demande intervention -->
+
+    <!-- Début modal validation d'une inetrvention -->
+    <th:block th:replace="fragments/_modalsIntervention.html::modalsValidationIntervention"></th:block>
+    <!-- Fin Modal attestation -->
+
+   
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="/vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script th:inline="javascript">
+    var token = /*[[${accessToken}]]*/ 'valeur_par_defaut';
+    var matricule = /*[[${code}]]*/ 'valeur_par_defaut';
+    // var idoneIntervention = /*[[${idoneIntervention}]]*/ 'valeur_par_defaut';
+
+  </script>
+  <script src="/js/creerIntervention.js"></script>
+  <script src="/js/moreIntervention.js"></script>
+
+  <script src="/js/off-canvas.js"></script>
+  <script src="/js/hoverable-collapse.js"></script>
+  <script src="/js/template.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/todolist.js"></script>
+  
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <!-- End custom js for this page-->
+
+
+
+ <!-- plugins:js -->
+ <!-- endinject -->
+ <!-- Plugin js for this page -->
+ <script src="/vendors/chart.js/Chart.min.js"></script>
+<!-- <script src="/vendors/datatables.net/jquery.dataTables.js"></script>-->
+<!-- <script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>-->
+<!-- <script src="js/dataTables.select.min.js"></script>-->
+
+ <!-- endinject -->
+ <!-- Custom js for this page-->
+ <script src="/js/dashboard.js"></script>
+ <script src="/js/Chart.roundedBarCharts.js"></script>
+
+</body>
+
+</html>

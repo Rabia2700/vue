@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <title>ENT USJ</title>
+    <!-- Required meta tags -->
+    <th:block th:replace="fragments/_head.html::head"></th:block>
+</head>
+<body>
+<div class="container-scroller">
+    <header>
+        <!-----        <th:block th:replace="fragments/_header.html::header"></th:block>
+------>
+    </header>
+    <div class="main-panel w-auto mt-5">
+        <div class="content-wrapper">
+            <div class="row m-4 text-center" >
+                <h3> Vos différentes Applications</h3>
+            </div>
+            <div class="row">
+
+
+                <div class="col-md-3  grid-margin stretch-card ">
+                    <div class="card card-special">
+                        <div class="card-body">
+                            <div class="back-icon p-2 mb-3">
+                                <i class="bi bi-person-badge-fill" style="color:#4b49ac ; "></i>
+                            </div>
+                            <div class="heading mb-3">
+                                <div class="card-title mt-3" >Disponibilités
+                                    <br><span style="color: #fff;"> </span>
+                                </div>
+                                <div class="description"><p class="color-light">Cliquez sur la flèche pour voir les emplois de temps des ecoles. </p>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <a th:href="@{disponibilite/Test}" class="val">Disponibilite <i class="bi bi-arrow-right" style="font-size:18px;"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3  grid-margin stretch-card ">
+                    <div class="card card-special">
+                        <div class="card-body">
+                            <div class="back-icon p-2 mb-3">
+                                <i class="bi bi-bricks" style="color:#4b49ac ; "></i>
+                            </div>
+                            <div class="heading mb-3">
+                                <div class="card-title">
+                                    Gestion <br><span> des emplois de temps</span>
+                                </div>
+                                <div class="card-title" >
+                                    <span></span>
+                                </div>
+                                <div class="description">
+                                    <p class="color-light">Cliquez sur la flèche pour acceder aux disponibilites des enseignsants </p>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <a th:href="@{emploisdetemps}" class="val">Emplois de temps <i class="bi bi-arrow-right" style="font-size:18px;"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <header>
+            <th:block th:replace="fragments/_footer.html::footer"></th:block>
+        </header>
+    </footer>
+</div>
+</div>
+</div>
+<!-- container-scroller -->
+
+<!-- plugins:js -->
+
+<th:block th:replace="fragments/_js.html::js"></th:block>
+
+<!-- End custom js for this page-->
+</body>
+</html>

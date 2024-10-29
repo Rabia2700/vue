@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <th:block th:replace="fragments/_head.html::head"></th:block>
+</head>
+<body>
+<div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+
+    <!--_header-->
+    <th:block th:replace="fragments/_header.html::header"></th:block>
+
+    <!--fin header-->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
+        <div class="theme-setting-wrapper">
+            <div id="settings-trigger"><i class="ti-settings"></i></div>
+            <div id="theme-settings" class="settings-panel">
+                <i class="settings-close ti-close"></i>
+                <p class="settings-heading">SIDEBAR SKINS</p>
+                <div class="sidebar-bg-options selected" id="sidebar-light-theme">
+                    <div class="img-ss rounded-circle bg-light border mr-3"></div>
+                    Light
+                </div>
+                <div class="sidebar-bg-options" id="sidebar-dark-theme">
+                    <div class="img-ss rounded-circle bg-dark border mr-3"></div>
+                    Dark
+                </div>
+                <p class="settings-heading mt-2">HEADER SKINS</p>
+                <div class="color-tiles mx-0 px-4">
+                    <div class="tiles success"></div>
+                    <div class="tiles warning"></div>
+                    <div class="tiles danger"></div>
+                    <div class="tiles info"></div>
+                    <div class="tiles dark"></div>
+                    <div class="tiles default"></div>
+                </div>
+            </div>
+        </div>
+        <!-- partial -->
+        <!-- partial:partials/_sidebar.html -->
+        <th:block th:replace="fragments/_NavGestBiblio.html::NavBiblio"></th:block>
+
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-md-12 grid-margin">
+                        <div class="row">
+                            <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                                <h3 class="font-weight-bold">
+                                    Détails de l'ouvrage
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="row">
+                        <div class="col-md-11 grid-margin stretch-card">
+                            <div class="card position-relative">
+                                <div class="card-body">
+                                    <div class="carousel slide detailed-report-carousel position-static pt-2" data-ride="carousel">
+                                        <div class="carousel-inner">
+                                            <div class="carousel-item active justify-content-center">
+                                                <div class="row justify-content-center">
+                                                    <div class="col-md-11 col-xl-3">
+                                                        <div class="ml-xl-4 mt-3">
+                                                            <div class="d-flex">
+                                                                <img src="/images/file-icons/128/008-archive.png" alt="user" style=" width: 166px;height: 160px;  margin-left: 6px;">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 col-xl-9">
+                                                        <div class="row">
+                                                            <div class="col-md-6 ">
+                                                                <div >
+                                                                    <table class="table table-borderless report-table">
+                                                                        <tr>
+                                                                            <td class="text-muted">Titre</td>
+                                                                            <td>
+                                                                                <h5 class="font-weight-bold mb-0" th:text="${ouvrage.nom}"></h5>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="text-muted">Auteur</td>
+                                                                            <td>
+                                                                                <h5 class="font-weight-bold mb-0" th:text="${ouvrage.auteur}"></h5>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="text-muted">Maison d'édition</td>
+                                                                            <td>
+                                                                                <h5 class="font-weight-bold mb-0" th:text="${ouvrage.maison_Edition}"></h5>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="text-muted">Date de publication</td>
+                                                                            <td>
+                                                                                <h5 class="font-weight-bold mb-0" th:text="${ouvrage.date_Edition}"></h5>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="text-muted">Catégorie</td>
+                                                                            <td>
+                                                                                <h5 class="font-weight-bold mb-0" th:text="${ouvrage.categorieDto.nom}"></h5>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="text-muted">Emplacement</td>
+                                                                            <td>
+                                                                                <h5 class="font-weight-bold mb-0" th:text="${ouvrage.localisationDto.nomEmplacement}"></h5>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="text-muted">Nature</td>
+                                                                            <td>
+                                                                                <h5 class="font-weight-bold mb-0" th:text="${ouvrage.nature}"></h5>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="text-muted">Genre</td>
+                                                                            <td>
+                                                                                <h5 class="font-weight-bold mb-0" th:text="${ouvrage.genre}"></h5>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="text-muted">Prix unitaire</td>
+                                                                            <td>
+                                                                                <h5 class="font-weight-bold mb-0" th:text="${ouvrage.prixUnitaire}"></h5>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="text-muted">Nombre d'exemplaire</td>
+                                                                            <td>
+                                                                                <h5 class="font-weight-bold mb-0" th:text="${ouvrage.nb_exemplaire}"></h5>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="text-muted">Description</td>
+                                                                            <td>
+                                                                                <h5>
+                                                                                    <textarea class="font-weight-bold mb-0" style="padding: 1rem 0 0 1rem; width: 50vh; height: 10vh; border: 1px solid; border-radius: 15px; text-indent: 2rem; line-height: 1.5" th:text="${ouvrage.description}" disabled></textarea>
+                                                                                </h5>
+                                                                            </td>
+                                                                        </tr>
+<!--                                                                        <tr th:if="${session.authorithies[0].authority =='Admin'}">-->
+<!--                                                                            <td>-->
+<!--                                                                                <button style="margin-left:101px;"  type="submit" class="btn btn-primary " data-toggle="modal" data-target="#detailsDocu" href="#detailsDocu" aria-expanded="false" aria-controls="ui-basic">-->
+<!--                                                                                    <span class="menu-title">Modifier</span>-->
+<!--                                                                                </button>-->
+<!--                                                                            </td>-->
+
+<!--                                                                        </tr>-->
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- content-wrapper ends -->
+
+            <!-- Modal for modlanotes  -->
+            <th:block
+                    th:replace="fragments/_modalsBiblio.html::modalsBiblio"
+            ></th:block>
+
+            <!-- End Modal for  moadlnotes  -->
+
+            <!-- partial:partials/_footer.html -->
+            <footer class="footer">
+                <th:block th:replace="fragments/_footer.html::footer"></th:block>
+            </footer>
+            <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+    </div>
+    <!-- container-scroller -->
+
+    <!-- plugins:js -->
+    <th:block th:replace="fragments/_js.html::js"></th:block>
+</div>
+<!-- End custom js for this page-->
+</body>
+</html>
